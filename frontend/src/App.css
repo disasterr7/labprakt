@@ -333,22 +333,78 @@ a:focus-visible {
   padding-top: 20px;
 }
 
-/* Заглушки и 404 */
-.not-found-box,
-.new-entry-box {
-  padding: 40px 20px;
-  text-align: center;
+/* Форма добавления фильма */
+.form-container {
+  max-width: 680px;
+  margin: 0 auto;
 }
 
-.stub-info-card {
-  max-width: 540px;
-  margin: 24px auto;
-  padding: 20px;
-  background-color: #eff6ff;
-  border: 1px dashed #93c5fd;
+.form-header {
+  margin-bottom: 24px;
+}
+
+.form-header h1 {
+  margin: 0 0 6px 0;
+  font-size: 1.75rem;
+  color: #111827;
+}
+
+.movie-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.flex-1 {
+  flex: 1;
+  min-width: 140px;
+}
+
+.form-input {
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
-  color: #1e40af;
   font-size: 0.95rem;
+  color: #111827;
+  background-color: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  font-family: inherit;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
 }
 
 .empty-placeholder {
