@@ -1,25 +1,21 @@
+import { Navigate, Route, Routes } from 'react-router'
+import { AppLayout } from './app/AppLayout'
+import { MoviesPage } from './pages/MoviesPage'
+import { MovieDetailsPage } from './pages/MovieDetailsPage'
+import { NewMoviePage } from './pages/NewMoviePage'
+import { NotFoundPage } from './pages/NotFoundPage'
 import './App.css'
-
-const appTitle: string = 'Каталог фильмов и сериалов'
-
 
 export default function App() {
   return (
-    <main className="app">
-      <header className="app-header">
-        <h1>{appTitle}</h1>
-        <p className="subtitle">
-          Персональная медиатека: списки к просмотру, оценки и избранное.
-        </p>
-      </header>
-
-      <section aria-labelledby="items-title" className="catalog-section">
-        <h2 id="items-title">Мои фильмы и сериалы</h2>
-        <div className="empty-placeholder">
-          <p>Здесь появится каталог добавленных фильмов и сериалов.</p>
-          <span className="badge">Раздел в разработке (ЛР 2)</span>
-        </div>
-      </section>
-    </main>
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route index element={<Navigate to="/movies" replace />} />
+        <Route path="movies" element={<MoviesPage />} />
+        <Route path="movies/new" element={<NewMoviePage />} />
+        <Route path="movies/:id" element={<MovieDetailsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   )
 }
