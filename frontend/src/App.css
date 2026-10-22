@@ -678,3 +678,94 @@ input:disabled {
   color: #1d4ed8;
   text-decoration: underline;
 }
+
+/* Стили авторизации и профиля (Лаб 6) */
+.user-profile-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f1f5f9;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.user-email-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1e293b;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.button-logout {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.button-logout:hover {
+  background-color: #fee2e2;
+}
+
+.memory-banner-active {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.memory-banner-active strong {
+  color: #15803d;
+}
+
+.auth-container {
+  max-width: 440px;
+  margin: 20px auto;
+}
+
+.auth-tabs {
+  display: flex;
+  border-bottom: 2px solid #e5e7eb;
+  margin-bottom: 20px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.auth-tab:hover {
+  color: #1e3a8a;
+}
+
+.auth-tab.active {
+  color: #1e3a8a;
+  border-bottom-color: #1e3a8a;
+}
+
+.form-info-banner {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}

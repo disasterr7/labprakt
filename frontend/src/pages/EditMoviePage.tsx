@@ -4,7 +4,7 @@ import type { Movie, MovieDraft } from '../types/movie'
 
 interface EditMoviePageProps {
   movies: Movie[]
-  onUpdate: (id: string, draft: MovieDraft) => void
+  onUpdate: (id: string, draft: MovieDraft) => Promise<void> | void
 }
 
 export function EditMoviePage({ movies, onUpdate }: EditMoviePageProps) {
@@ -27,8 +27,8 @@ export function EditMoviePage({ movies, onUpdate }: EditMoviePageProps) {
     )
   }
 
-  const handleSave = (draft: MovieDraft) => {
-    onUpdate(movie.id, draft)
+  const handleSave = async (draft: MovieDraft) => {
+    await onUpdate(movie.id, draft)
     navigate(`/movies/${movie.id}`)
   }
 

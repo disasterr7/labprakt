@@ -4,7 +4,7 @@ import type { Movie, MovieStatus } from '../types/movie'
 
 interface MovieDetailsPageProps {
   movies: Movie[]
-  onDelete: (id: string) => void
+  onDelete: (id: string) => Promise<void> | void
 }
 
 const statusLabels: Record<MovieStatus, string> = {
@@ -36,12 +36,12 @@ export function MovieDetailsPage({ movies, onDelete }: MovieDetailsPageProps) {
     )
   }
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const confirmed = window.confirm(
       `Вы действительно хотите удалить запись «${movie.title}» из медиатеки?`,
     )
     if (confirmed) {
-      onDelete(movie.id)
+      await onDelete(movie.id)
       navigate('/movies')
     }
   }

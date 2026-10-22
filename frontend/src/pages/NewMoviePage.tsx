@@ -3,7 +3,7 @@ import { MovieForm } from '../components/MovieForm'
 import type { MovieDraft } from '../types/movie'
 
 interface NewMoviePageProps {
-  onCreate: (draft: MovieDraft) => string
+  onCreate: (draft: MovieDraft) => Promise<string> | string
 }
 
 const defaultDraft: MovieDraft = {
@@ -23,8 +23,8 @@ const defaultDraft: MovieDraft = {
 export function NewMoviePage({ onCreate }: NewMoviePageProps) {
   const navigate = useNavigate()
 
-  const handleSave = (draft: MovieDraft) => {
-    const newId = onCreate(draft)
+  const handleSave = async (draft: MovieDraft) => {
+    const newId = await onCreate(draft)
     navigate(`/movies/${newId}`)
   }
 
