@@ -18,3 +18,5 @@ export type Movie = {
   durationOrEpisodes: string
   directorOrCreator: string
 }
+
+export type MovieDraft = Omit<Movie, 'id'>

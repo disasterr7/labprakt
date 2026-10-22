@@ -1,6 +1,10 @@
-import { Link, useParams } from 'react-router'
-import { movies } from '../data/movies'
-import type { MovieStatus } from '../types/movie'
+import { Link, useNavigate, useParams } from 'react-router'
+import type { Movie, MovieStatus } from '../types/movie'
+
+interface MovieDetailsPageProps {
+  movies: Movie[]
+  onDelete: (id: string) => void
+}
 
 const statusLabels: Record<MovieStatus, string> = {
   planned: 'В планах к просмотру',
@@ -8,8 +12,9 @@ const statusLabels: Record<MovieStatus, string> = {
   watched: 'Просмотрено полностью',
 }
 
-export function MovieDetailsPage() {
+export function MovieDetailsPage({ movies, onDelete }: MovieDetailsPageProps) {
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
   const movie = movies.find((item) => item.id === id)
 
   if (!movie) {
@@ -26,22 +31,51 @@ export function MovieDetailsPage() {
     )
   }
 
+  const handleDelete = () => {
+    const confirmed = window.confirm(
+      `Вы действительно хотите удалить запись «${movie.title}» из медиатеки?`,
+    )
+    if (confirmed) {
+      onDelete(movie.id)
+      navigate('/movies')
+    }
+  }
+
   return (
     <article className="page-section movie-details">
       <div className="movie-details-top">
         <Link to="/movies" className="back-link">
           ← К списку фильмов
         </Link>
-        <span className={`status-badge status-${movie.status}`}>
-          {statusLabels[movie.status]}
-        </span>
+        <div className="movie-details-actions">
+          <Link to={`/movies/${movie.id}/edit`} className="button-secondary btn-sm">
+            ✎ Редактировать
+          </Link>
+          <button
+            type="button"
+            className="button-danger btn-sm"
+            onClick={handleDelete}
+          >
+            🗑 Удалить
+          </button>
+        </div>
       </div>
 
       <header className="movie-details-header">
+        <div className="header-status-row">
+          <span className={`status-badge status-${movie.status}`}>
+            {statusLabels[movie.status]}
+          </span>
+          <span className="priority-badge">
+            Приоритет: {movie.priority === 'high' ? 'Высокий' : movie.priority === 'medium' ? 'Средний' : 'Низкий'}
+          </span>
+        </div>
         <h1>{movie.title}</h1>
-        <p className="movie-original-title-large">
-          {movie.originalTitle} ({movie.releaseYear})
-        </p>
+        {movie.originalTitle && (
+          <p className="movie-original-title-large">
+            {movie.originalTitle} ({movie.releaseYear})
+          </p>
+        )}
       </header>
 
       <div className="movie-meta-grid">
@@ -50,16 +84,20 @@ export function MovieDetailsPage() {
           <span className="meta-value">{movie.type === 'movie' ? 'Фильм' : 'Сериал'}</span>
         </div>
         <div className="meta-item">
+          <span className="meta-label">Год выпуска:</span>
+          <span className="meta-value">{movie.releaseYear}</span>
+        </div>
+        <div className="meta-item">
           <span className="meta-label">Жанр:</span>
-          <span className="meta-value">{movie.genre}</span>
+          <span className="meta-value">{movie.genre || 'Не указан'}</span>
         </div>
         <div className="meta-item">
           <span className="meta-label">Режиссёр / Создатель:</span>
-          <span className="meta-value">{movie.directorOrCreator}</span>
+          <span className="meta-value">{movie.directorOrCreator || 'Не указан'}</span>
         </div>
         <div className="meta-item">
           <span className="meta-label">Длительность:</span>
-          <span className="meta-value">{movie.durationOrEpisodes}</span>
+          <span className="meta-value">{movie.durationOrEpisodes || 'Не указана'}</span>
         </div>
         <div className="meta-item">
           <span className="meta-label">Рейтинг:</span>
@@ -69,11 +107,11 @@ export function MovieDetailsPage() {
 
       <div className="movie-synopsis">
         <h2>Описание сюжета</h2>
-        <p>{movie.description}</p>
+        <p>{movie.description || 'Описание пока не добавлено.'}</p>
       </div>
 
       <footer className="movie-details-footer">
-        <Link to="/movies" className="button-primary">
+        <Link to="/movies" className="button-secondary">
           ← Вернуться в каталог
         </Link>
       </footer>

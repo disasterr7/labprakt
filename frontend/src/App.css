@@ -432,3 +432,162 @@ a:focus-visible {
     font-size: 1.6rem;
   }
 }
+
+/* Баннер уведомления о хранении в памяти (Лаб 3) */
+.memory-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.memory-banner-icon {
+  font-size: 1.1rem;
+}
+
+.memory-banner-text strong {
+  color: #1d4ed8;
+}
+
+/* Панель фильтрации (Лаб 3) */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.filter-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-chip {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-chip:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.filter-chip.active {
+  background-color: #1e3a8a;
+  border-color: #1e3a8a;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.filter-count {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.filter-reset-button {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+.filter-reset-button:hover {
+  color: #1d4ed8;
+}
+
+/* Сообщения валидации и ошибки формы */
+.form-error-banner {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.required-star {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+/* Кнопка опасного действия (удаление) и компактные кнопки */
+.button-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #dc2626;
+  color: #ffffff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.button-danger:hover {
+  background-color: #b91c1c;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+.movie-details-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-status-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.priority-badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  background-color: #f1f5f9;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}

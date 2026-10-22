@@ -15,6 +15,13 @@ export function AppLayout() {
         </nav>
       </header>
 
+      <div className="memory-banner" role="status">
+        <span className="memory-banner-icon">ℹ️</span>
+        <span className="memory-banner-text">
+          <strong>Внимание:</strong> Данные хранятся в оперативной памяти (React-состояние). При перезагрузке страницы (F5) список вернется к исходным данным.
+        </span>
+      </div>
+
       <main className="app-main">
         <Outlet />
       </main>
