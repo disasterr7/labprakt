@@ -654,3 +654,27 @@ input:disabled {
   color: #94a3b8;
   cursor: not-allowed;
 }
+
+/* Кнопка обновления справочника из Supabase (Лаб 5) */
+.field-action-row {
+  margin-top: 6px;
+}
+
+.button-refresh {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 2px 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s ease;
+}
+
+.button-refresh:hover:not(:disabled) {
+  color: #1d4ed8;
+  text-decoration: underline;
+}

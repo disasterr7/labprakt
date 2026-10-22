@@ -234,6 +234,18 @@ export function MovieForm({
             </div>
           )}
 
+          {load.status === 'success' && genres.length > 0 && (
+            <div className="field-action-row">
+              <button
+                type="button"
+                className="button-refresh"
+                onClick={retry}
+              >
+                🔄 Обновить справочник
+              </button>
+            </div>
+          )}
+
           {load.status === 'success' && draft.genre !== '' && !selectedGenreExists && (
             <p role="alert" className="field-hint field-hint-warning">
               Ранее сохранённый код «{draft.genre}» не найден в справочнике. Пожалуйста, выберите существующий жанр.
