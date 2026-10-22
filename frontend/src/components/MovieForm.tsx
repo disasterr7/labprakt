@@ -4,7 +4,7 @@ import type { MovieDraft, MoviePriority, MovieStatus, MovieType } from '../types
 
 interface MovieFormProps {
   initialValues: MovieDraft
-  onSave: (draft: MovieDraft) => void
+  onSave: (draft: MovieDraft) => Promise<void> | void
   onCancel: () => void
   submitButtonText?: string
 }
@@ -17,13 +17,15 @@ export function MovieForm({
 }: MovieFormProps) {
   const [draft, setDraft] = useState<MovieDraft>(() => ({ ...initialValues }))
   const [error, setError] = useState<string | null>(null)
+  const [serverError, setServerError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const { load, retry } = useGenres()
   const genres = load.status === 'success' ? load.data : []
   const selectedGenreExists = genres.some((genre) => genre.id === draft.genre)
   const canSave = load.status === 'success' && selectedGenreExists
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!canSave) {
@@ -48,10 +50,24 @@ export function MovieForm({
     }
 
     setError(null)
-    onSave({
-      ...draft,
-      title: trimmedTitle,
-    })
+    setServerError(null)
+    setIsSubmitting(true)
+
+    try {
+      await onSave({
+        ...draft,
+        title: trimmedTitle,
+      })
+    } catch (err: unknown) {
+      // Сохраняем введенные данные черновика в draft и выводим сообщение об ошибке
+      const message =
+        err instanceof Error
+          ? err.message
+          : 'Произошла непредвиденная ошибка при сохранении в базе данных'
+      setServerError(message)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -59,6 +75,13 @@ export function MovieForm({
       {error && (
         <div role="alert" className="form-error-banner">
           ⚠️ {error}
+        </div>
+      )}
+
+      {serverError && (
+        <div role="alert" className="form-error-banner form-server-error">
+          <strong>Ошибка сохранения:</strong> {serverError}
+          <div className="error-note">Введённые данные сохранены в форме. Вы можете исправить ошибку или повторить отправку.</div>
         </div>
       )}
 
@@ -295,10 +318,31 @@ export function MovieForm({
       </div>
 
       <div className="form-actions">
-        <button type="submit" className="button-primary" disabled={!canSave}>
-          {submitButtonText}
+        <button
+          type="submit"
+          className="button-primary"
+          disabled={!canSave || isSubmitting}
+        >
+          {isSubmitting ? '⏳ Сохранение...' : submitButtonText}
         </button>
-        <button type="button" className="button-secondary" onClick={onCancel}>
+        <button
+          type="button"
+          className="button-secondary"
+          onClick={() => {
+            setDraft({ ...initialValues })
+            setError(null)
+            setServerError(null)
+          }}
+          disabled={isSubmitting}
+        >
+          Сбросить
+        </button>
+        <button
+          type="button"
+          className="button-secondary"
+          onClick={onCancel}
+          disabled={isSubmitting}
+        >
           Отмена
         </button>
       </div>

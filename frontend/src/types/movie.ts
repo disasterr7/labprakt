@@ -20,3 +20,14 @@ export type Movie = {
 }
 
 export type MovieDraft = Omit<Movie, 'id'>
+
+export interface MovieReview {
+  id: string
+  mediaId: string
+  reviewText: string
+  rating: number
+  watchedDate: string
+  createdAt: string
+}
+
+export type MovieReviewDraft = Omit<MovieReview, 'id' | 'createdAt'>
