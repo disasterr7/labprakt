@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useGenres } from '../hooks/useGenres'
 import type { MovieDraft, MoviePriority, MovieStatus, MovieType } from '../types/movie'
 
 interface MovieFormProps {
@@ -17,8 +18,18 @@ export function MovieForm({
   const [draft, setDraft] = useState<MovieDraft>(() => ({ ...initialValues }))
   const [error, setError] = useState<string | null>(null)
 
+  const { load, retry } = useGenres()
+  const genres = load.status === 'success' ? load.data : []
+  const selectedGenreExists = genres.some((genre) => genre.id === draft.genre)
+  const canSave = load.status === 'success' && selectedGenreExists
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!canSave) {
+      setError('Дождитесь загрузки справочника и выберите доступный жанр.')
+      return
+    }
 
     const trimmedTitle = draft.title.trim()
     if (trimmedTitle.length < 2 || trimmedTitle.length > 100) {
@@ -169,16 +180,65 @@ export function MovieForm({
       </div>
 
       <div className="form-row">
+        {/* Поле Жанр из сетевого справочника (ЛР 4) */}
         <div className="form-group flex-1">
-          <label htmlFor="movie-genre">Жанры</label>
-          <input
+          <label htmlFor="movie-genre">
+            Жанр <span className="required-star">*</span>
+          </label>
+          <select
             id="movie-genre"
-            type="text"
             value={draft.genre}
+            required
+            disabled={load.status !== 'success' || genres.length === 0}
             onChange={(e) => setDraft((prev) => ({ ...prev, genre: e.target.value }))}
-            placeholder="Например: Фантастика, Драма"
             className="form-input"
-          />
+          >
+            <option value="">Выберите жанр</option>
+            {draft.genre !== '' && !selectedGenreExists && (
+              <option value={draft.genre} disabled>
+                Текущий код: {draft.genre} — выберите доступный жанр
+              </option>
+            )}
+            {genres.map((genre) => (
+              <option key={genre.id} value={genre.id}>
+                {genre.name}
+              </option>
+            ))}
+          </select>
+
+          {load.status === 'loading' && (
+            <p role="status" className="field-hint field-hint-loading">
+              ⏳ Загружаем справочник жанров…
+            </p>
+          )}
+
+          {load.status === 'error' && (
+            <div className="field-retry-row">
+              <p role="alert" className="field-hint field-hint-error">
+                ⚠️ {load.message}
+              </p>
+              <button type="button" className="button-retry" onClick={retry}>
+                Повторить
+              </button>
+            </div>
+          )}
+
+          {load.status === 'success' && genres.length === 0 && (
+            <div className="field-retry-row">
+              <p role="status" className="field-hint field-hint-empty">
+                Справочник жанров пуст. Сохранение недоступно.
+              </p>
+              <button type="button" className="button-retry" onClick={retry}>
+                Повторить
+              </button>
+            </div>
+          )}
+
+          {load.status === 'success' && draft.genre !== '' && !selectedGenreExists && (
+            <p role="alert" className="field-hint field-hint-warning">
+              Ранее сохранённый код «{draft.genre}» не найден в справочнике. Пожалуйста, выберите существующий жанр.
+            </p>
+          )}
         </div>
 
         <div className="form-group flex-1">
@@ -223,7 +283,7 @@ export function MovieForm({
       </div>
 
       <div className="form-actions">
-        <button type="submit" className="button-primary">
+        <button type="submit" className="button-primary" disabled={!canSave}>
           {submitButtonText}
         </button>
         <button type="button" className="button-secondary" onClick={onCancel}>

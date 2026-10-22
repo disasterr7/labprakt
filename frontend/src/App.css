@@ -591,3 +591,66 @@ a:focus-visible {
   padding: 3px 10px;
   border-radius: 9999px;
 }
+
+/* Стили для сетевого справочника (Лаб 4) */
+.field-hint {
+  font-size: 0.85rem;
+  margin: 4px 0 0 0;
+  line-height: 1.35;
+}
+
+.field-hint-loading {
+  color: #2563eb;
+}
+
+.field-hint-error {
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.field-hint-empty {
+  color: #d97706;
+}
+
+.field-hint-warning {
+  color: #b45309;
+  font-weight: 500;
+}
+
+.field-retry-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.button-retry {
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.button-retry:hover {
+  background-color: #dbeafe;
+  border-color: #93c5fd;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed !important;
+}
+
+select:disabled,
+input:disabled {
+  background-color: #f8fafc;
+  border-color: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+}

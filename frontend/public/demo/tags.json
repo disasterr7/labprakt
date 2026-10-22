@@ -1,0 +1,9 @@
+[
+  { "id": "sci-fi", "name": "Научная фантастика" },
+  { "id": "drama", "name": "Драма" },
+  { "id": "crime", "name": "Криминал" },
+  { "id": "action", "name": "Боевик" },
+  { "id": "thriller", "name": "Триллер" },
+  { "id": "comedy", "name": "Комедия" },
+  { "id": "horror", "name": "Ужасы" }
+]
