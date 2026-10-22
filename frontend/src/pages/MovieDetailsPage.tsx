@@ -1,4 +1,5 @@
 import { Link, useNavigate, useParams } from 'react-router'
+import { useGenres } from '../hooks/useGenres'
 import type { Movie, MovieStatus } from '../types/movie'
 
 interface MovieDetailsPageProps {
@@ -16,6 +17,10 @@ export function MovieDetailsPage({ movies, onDelete }: MovieDetailsPageProps) {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const movie = movies.find((item) => item.id === id)
+
+  const { load: genresLoad } = useGenres()
+  const genres = genresLoad.status === 'success' ? genresLoad.data : []
+  const genreName = movie ? genres.find((g) => g.id === movie.genre)?.name || movie.genre : ''
 
   if (!movie) {
     return (
@@ -89,7 +94,7 @@ export function MovieDetailsPage({ movies, onDelete }: MovieDetailsPageProps) {
         </div>
         <div className="meta-item">
           <span className="meta-label">Жанр:</span>
-          <span className="meta-value">{movie.genre || 'Не указан'}</span>
+          <span className="meta-value">{genreName || 'Не указан'}</span>
         </div>
         <div className="meta-item">
           <span className="meta-label">Режиссёр / Создатель:</span>

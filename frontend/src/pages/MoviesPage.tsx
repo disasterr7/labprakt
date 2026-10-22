@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { MovieCard } from '../components/MovieCard'
+import { useGenres } from '../hooks/useGenres'
 import type { Movie, MovieStatus } from '../types/movie'
 
 interface MoviesPageProps {
@@ -18,6 +19,9 @@ const filterOptions: { value: FilterOption; label: string }[] = [
 
 export function MoviesPage({ movies }: MoviesPageProps) {
   const [statusFilter, setStatusFilter] = useState<FilterOption>('all')
+  const { load: genresLoad } = useGenres()
+  const genres = genresLoad.status === 'success' ? genresLoad.data : []
+  const genreMap = new Map(genres.map((g) => [g.id, g.name]))
 
   const filteredMovies =
     statusFilter === 'all'
@@ -92,7 +96,11 @@ export function MoviesPage({ movies }: MoviesPageProps) {
       ) : (
         <div className="movie-list">
           {filteredMovies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              genreName={genreMap.get(movie.genre)}
+            />
           ))}
         </div>
       )}

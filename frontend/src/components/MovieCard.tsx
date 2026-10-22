@@ -3,6 +3,7 @@ import type { Movie, MovieStatus } from '../types/movie'
 
 type MovieCardProps = {
   movie: Movie
+  genreName?: string
 }
 
 const statusLabels: Record<MovieStatus, string> = {
@@ -11,7 +12,9 @@ const statusLabels: Record<MovieStatus, string> = {
   watched: 'Просмотрено',
 }
 
-export function MovieCard({ movie }: MovieCardProps) {
+export function MovieCard({ movie, genreName }: MovieCardProps) {
+  const displayGenre = genreName || movie.genre
+
   return (
     <article className="movie-card">
       <header className="movie-card-header">
@@ -31,7 +34,7 @@ export function MovieCard({ movie }: MovieCardProps) {
       <p className="movie-card-description">{movie.description}</p>
 
       <footer className="movie-card-footer">
-        <span className="movie-genre">{movie.genre}</span>
+        <span className="movie-genre">{displayGenre}</span>
         <span className="movie-rating">★ {movie.rating.toFixed(1)}</span>
       </footer>
     </article>
